@@ -1,0 +1,247 @@
+/* Teachers' Day Carousel Styles */
+
+.teachers-carousel {
+  @apply w-full min-h-screen flex items-center justify-center p-4;
+  background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--muted)) 100%);
+}
+
+.carousel-container {
+  @apply relative max-w-6xl w-full;
+}
+
+/* Hide radio inputs */
+.carousel-radio {
+  @apply absolute opacity-0 pointer-events-none;
+}
+
+/* Main carousel area */
+.carousel-main {
+  @apply relative mb-8 overflow-hidden;
+  border-radius: var(--radius);
+  box-shadow: var(--carousel-shadow);
+  transition: var(--transition-smooth);
+}
+
+.carousel-main:hover {
+  box-shadow: var(--carousel-shadow-hover);
+}
+
+.carousel-track {
+  @apply flex transition-transform duration-500 ease-in-out;
+  width: 500%; /* 5 slides × 100% */
+}
+
+.carousel-slide {
+  @apply w-full flex-shrink-0;
+  width: 20%; /* 100% / 5 slides */
+}
+
+.slide-figure {
+  @apply relative m-0;
+}
+
+.slide-image {
+  @apply w-full h-auto object-cover;
+  aspect-ratio: 16/9;
+  max-height: 60vh;
+}
+
+.slide-caption {
+  @apply absolute bottom-0 left-0 right-0 p-8 text-center;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  color: white;
+}
+
+.slide-title {
+  @apply text-3xl md:text-4xl font-bold mb-2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.slide-subtitle {
+  @apply text-lg md:text-xl opacity-90;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Navigation arrows */
+.carousel-nav {
+  @apply absolute inset-0 pointer-events-none;
+}
+
+.nav-arrow {
+  @apply absolute top-1/2 transform -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full cursor-pointer pointer-events-auto transition-all duration-300;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: hsl(var(--foreground));
+}
+
+.nav-arrow:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.nav-arrow svg {
+  @apply w-6 h-6;
+}
+
+.nav-prev {
+  @apply left-4;
+}
+
+.nav-next {
+  @apply right-4;
+}
+
+/* Thumbnail navigation */
+.carousel-thumbnails {
+  @apply flex gap-3 justify-center overflow-x-auto pb-2;
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted)) transparent;
+}
+
+.carousel-thumbnails::-webkit-scrollbar {
+  height: 6px;
+}
+
+.carousel-thumbnails::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.carousel-thumbnails::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted));
+  border-radius: 3px;
+}
+
+.thumbnail-item {
+  @apply relative cursor-pointer flex-shrink-0 transition-all duration-300;
+  border-radius: calc(var(--radius) * 0.5);
+  overflow: hidden;
+}
+
+.thumbnail-image {
+  @apply w-20 h-12 md:w-24 md:h-14 object-cover;
+  aspect-ratio: 2/1;
+  transition: var(--transition-smooth);
+}
+
+.thumbnail-indicator {
+  @apply absolute inset-0 border-2 border-transparent rounded-lg transition-all duration-300;
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)) padding-box,
+              linear-gradient(45deg, transparent, transparent) border-box;
+}
+
+.thumbnail-item:hover .thumbnail-image {
+  transform: scale(1.05);
+}
+
+.thumbnail-item:hover .thumbnail-indicator {
+  border-color: hsl(var(--primary));
+  box-shadow: 0 0 0 2px hsla(var(--primary), 0.3);
+}
+
+/* Active states based on radio button selection */
+#slide-1:checked ~ .carousel-main .carousel-track {
+  transform: translateX(0%);
+}
+
+#slide-2:checked ~ .carousel-main .carousel-track {
+  transform: translateX(-20%);
+}
+
+#slide-3:checked ~ .carousel-main .carousel-track {
+  transform: translateX(-40%);
+}
+
+#slide-4:checked ~ .carousel-main .carousel-track {
+  transform: translateX(-60%);
+}
+
+#slide-5:checked ~ .carousel-main .carousel-track {
+  transform: translateX(-80%);
+}
+
+/* Active thumbnail highlighting */
+#slide-1:checked ~ .carousel-thumbnails label[for="slide-1"] .thumbnail-indicator,
+#slide-2:checked ~ .carousel-thumbnails label[for="slide-2"] .thumbnail-indicator,
+#slide-3:checked ~ .carousel-thumbnails label[for="slide-3"] .thumbnail-indicator,
+#slide-4:checked ~ .carousel-thumbnails label[for="slide-4"] .thumbnail-indicator,
+#slide-5:checked ~ .carousel-thumbnails label[for="slide-5"] .thumbnail-indicator {
+  border-color: hsl(var(--accent));
+  box-shadow: 0 0 0 3px hsla(var(--accent), 0.3), 
+              0 0 20px hsla(var(--accent), 0.4);
+}
+
+/* Show/hide navigation arrows based on current slide */
+#slide-1:checked ~ .carousel-main .nav-arrow.nav-prev,
+#slide-5:checked ~ .carousel-main .nav-arrow.nav-next {
+  @apply opacity-0 pointer-events-none;
+}
+
+#slide-1:checked ~ .carousel-main label[for="slide-2"].nav-next,
+#slide-2:checked ~ .carousel-main label[for="slide-1"].nav-prev,
+#slide-2:checked ~ .carousel-main label[for="slide-3"].nav-next,
+#slide-3:checked ~ .carousel-main label[for="slide-2"].nav-prev,
+#slide-3:checked ~ .carousel-main label[for="slide-4"].nav-next,
+#slide-4:checked ~ .carousel-main label[for="slide-3"].nav-prev,
+#slide-4:checked ~ .carousel-main label[for="slide-5"].nav-next,
+#slide-5:checked ~ .carousel-main label[for="slide-4"].nav-prev {
+  @apply opacity-100 pointer-events-auto;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .slide-caption {
+    @apply p-4;
+  }
+  
+  .slide-title {
+    @apply text-2xl;
+  }
+  
+  .slide-subtitle {
+    @apply text-base;
+  }
+  
+  .nav-arrow {
+    @apply w-10 h-10;
+  }
+  
+  .nav-arrow svg {
+    @apply w-5 h-5;
+  }
+  
+  .nav-prev {
+    @apply left-2;
+  }
+  
+  .nav-next {
+    @apply right-2;
+  }
+  
+  .carousel-thumbnails {
+    @apply gap-2;
+  }
+  
+  .thumbnail-image {
+    @apply w-16 h-10;
+  }
+}
+
+@media (max-width: 480px) {
+  .teachers-carousel {
+    @apply p-2;
+  }
+  
+  .slide-caption {
+    @apply p-3;
+  }
+  
+  .slide-title {
+    @apply text-xl;
+  }
+  
+  .slide-subtitle {
+    @apply text-sm;
+  }
+}
