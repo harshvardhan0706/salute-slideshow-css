@@ -90,6 +90,13 @@ const TeachersWishes = () => {
           ))}
         </div>
 
+        <div className="henry-adams-quote">
+          <blockquote className="adams-quote-text">
+            "A teacher affects eternity; he can never tell where his influence stops."
+          </blockquote>
+          <cite className="adams-quote-author">— Henry Adams</cite>
+        </div>
+
         <div className="final-note">
           <div className="note-content">
             <h3 className="note-title">To All Our Dedicated Teachers</h3>
